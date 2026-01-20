@@ -38,11 +38,12 @@
         <button id="submit_register">Register</button>
     </div>
     <button onclick="window.location.href='./main.html'">Go back</button>
+    <span id="output_span"></span>
     <script>
         const ele = document.getElementById("submit_register");
 
 async function post() {
-    const url="./register"
+    const url="http://localhost:3005/register/";
 
     try{
         const name = document.getElementById("name").value;
@@ -62,7 +63,7 @@ async function post() {
         const result = await response.json();
         
         if(result.code == 200){
-        document.getElementById("output_span").innerHTML = "new user created successfully";
+        document.getElementById("output_span").innerHTML = "New user created successfully!";
         }
     }
     catch(e)
