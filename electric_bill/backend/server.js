@@ -2,34 +2,37 @@ const express = require("express")
 const cors = require("cors");
 const mongoose = require("mongoose");
 const DataModel = require('./models/DataModel');
+const UserModel = require('./models/UserModel');
 
 const app = express();
 app.use(cors(
-    {origin:'http://localhost:5500/*'}
+    {origin:'http://localhost:5500'}
 ));
 
 app.use(express.json());
 
 app.post("/register",async (req, res) => {
-    
-    const name = req.body.name;
-    const meter_no = req.body.meter_no;
-    console.log(req.body);
 
     try{
-        const newData = await DataModel.create({name: name, meter_no:meter_no})
-        console.log(newData)
+        const newData = await UserModel.create(req.body)
+
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
     
-
     res.json({code: 200});
 });
 
 app.post("/bill",async (req, res) => {
     const meter_no = req.body.meter_no;
     const unit = req.body.input;
+
+    const find = await UserModel.findOne({meter_no: meter_no});
+    
+    if(find == null)
+    {
+        return res.status(404).json({message: "meter number not found"});
+    }
 
     const point = Math.trunc(unit/50);
     let amount = 0;
@@ -43,21 +46,10 @@ app.post("/bill",async (req, res) => {
     amount = amount + (left*(point+1));
 
     try{
-        const newBillEntry = { 
-            units: unit, 
-            amount: amount 
-        };
-    
-
-        const updatedRecord = await DataModel.findOneAndUpdate(
-            { meter_no: meter_no },           
-            { $push: { bill: newBillEntry } }, 
-            { new: true, upsert: true }       
-        );
+        const record = await DataModel.create({meter_no: meter_no, units: unit, amount: amount});
 
         res.status(200).json({
             success: true,
-            updatedRecord
         });
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -66,6 +58,12 @@ app.post("/bill",async (req, res) => {
 
 app.get("/", async (req, res) => {
     const data = await DataModel.find({});
+
+    res.json(data);
+});
+
+app.get("/users", async (req, res) => {
+    const data = await UserModel.find({});
 
     res.json(data);
 })
