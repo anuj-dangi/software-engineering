@@ -13,10 +13,16 @@ async function addBill() {
         const user_meter_no = document.getElementById("user_meter_no").value;
     
         let data = {input: user_input, meter_no: user_meter_no};
-        await post(url, data);
+        let response = await post(url, data);
 
         document.getElementById("user_input").value = "";
         document.getElementById("user_meter_no").value = "";
+
+        if(response.status == 404)
+        {
+            document.getElementById("error").innerHTML = "Meter no not found";
+            return;
+        }
 
         await show_data();
 

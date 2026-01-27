@@ -23,3 +23,6 @@ body{
         table, th, td {
             border: 1px solid;
         }
+        #error{
+            color:red
+        }

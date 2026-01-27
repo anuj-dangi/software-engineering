@@ -7,12 +7,6 @@ export const post = async (url, data) => {
             body:JSON.stringify(data),
         });
 
-        if(!response.ok)
-        {
-            throw new Error(`Response status: ${response.status}`);
-        }
-        // optional: clear inputs
-
         return response;
 
     }
