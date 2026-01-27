@@ -1,0 +1,25 @@
+body{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 25vh;
+            gap:2rem;
+        }
+        #main_div{
+            padding:10px;
+            display: flex;
+            flex-direction: column;
+            gap:1rem;
+            border:1px solid gray;
+            border-radius: 5px;
+        }
+        input{
+            padding:5px;
+        }
+        button{
+            padding:5px;
+            cursor: pointer;
+        }
+        table, th, td {
+            border: 1px solid;
+        }

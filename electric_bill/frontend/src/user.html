@@ -4,88 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Users</title>
-    <style>
-        body{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 25vh;
-            gap:2rem;
-        }
-        #main_div{
-            padding:10px;
-            display: flex;
-            flex-direction: column;
-            gap:1rem;
-            border:1px solid gray;
-            border-radius: 5px;
-        }
-        input{
-            padding:5px;
-        }
-        button{
-            padding:5px;
-            cursor: pointer;
-        }
-        table, th, td {
-            border: 1px solid;
-        }
-    </style>    
+    <link href="../css/user.css" rel="stylesheet" type="text/css">
+    <script src="../js/user.js" type="module" defer></script>  
 </head>
 <body>
     <button onclick="window.location.href='./main.html'">Go back</button>
     <span id="users"></span>
-    <script>
-        async function get_users() {
-        const url="http://localhost:3005/users"
-
-        try{
-            const response = await fetch(url)
-
-            if(!response.ok)
-            {
-                throw new Error(`Response status: ${response.status}`);
-            }
-
-            let result = await response.json();
-            let output = `
-                        <table>
-                        <thead>
-                            <tr>
-                            <th>Name</th>
-                            <th>Meter No</th>
-                            <th>Phone</th>
-                            <th>Email</th>
-                            <th>Type</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        `;
-
-                        for (let i = 0; i < result.length; i++) {
-                        output += `
-                            <tr>
-                            <td>${result[i].name}</td>
-                            <td>${result[i].meter_no}</td>
-                            <td>${result[i].phone}</td>
-                            <td>${result[i].mail}</td>
-                            <td>${result[i].type}</td>
-                            </tr>
-                        `;
-                        }
-
-                        output += `</tbody></table>`;
-
-            
-            document.getElementById("users").innerHTML = output;
-        }
-        catch(e)
-        {
-            console.log("Error :" ,e);
-        }
-    }
-
-        get_users();
-    </script>
 </body>
 </html>

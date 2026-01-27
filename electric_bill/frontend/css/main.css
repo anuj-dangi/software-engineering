@@ -1,0 +1,16 @@
+body{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 50vh;
+            gap:2rem;
+        }
+        #main_div{
+            display: flex;
+            flex-direction: row;
+            gap:2rem;   
+        }
+        button{
+            padding:20px;
+            cursor: pointer;
+        }
